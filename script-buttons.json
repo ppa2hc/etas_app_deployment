@@ -1,0 +1,4 @@
+{
+    "deploy_ara_app_x86": "/home/developer/workspace/etas_app_deployment/deploy.sh 49 dreamKIT-026b8717",
+    "deploy_ara_app_dreamKIT": "/home/developer/workspace/etas_app_deployment/deploy.sh 49 dreamKIT-23042261"
+}
