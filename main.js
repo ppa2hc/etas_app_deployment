@@ -125,20 +125,31 @@ socket.on("messageToKit-kitReply", onKitReply)
 /*
  * calculate hash from string
  */
-function stringToHash(string) {
+// function stringToHash(string) {
 
-    let hash = 0;
+//     let hash = 0;
 
-    if (string.length == 0) return hash;
+//     if (string.length == 0) return hash;
 
-    for (i = 0; i < string.length; i++) {
-        char = string.charCodeAt(i);
-        hash = ((hash << 5) - hash) + char;
-        hash = hash & hash;
+//     for (i = 0; i < string.length; i++) {
+//         char = string.charCodeAt(i);
+//         hash = ((hash << 5) - hash) + char;
+//         hash = hash & hash;
+//     }
+
+//     return hash;
+// }
+
+const stringToHash = (s) => {
+    var hash = 0;
+  
+    for (i = 0; i < s.length; i++) {
+      hash = (hash << 5) - hash + s.charCodeAt(i);
+      hash = hash & hash; // prevent overflow from happening
     }
-
-    return hash;
-}
+    if (hash < 0) hash=hash*(-1)
+    return hash;   // returns lower 16-bit of hash value
+  };
 
 /*
  * Send adaptive app to the kit
