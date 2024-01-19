@@ -1,4 +1,6 @@
 {
-    "deploy_ara_app_x86": "/home/developer/workspace/etas_app_deployment/deploy.sh 49 dreamKIT-026b8717",
-    "deploy_ara_app_dreamKIT": "/home/developer/workspace/etas_app_deployment/deploy.sh 49 dreamKIT-23042261"
+    "deploy_ara_app_x86": "/home/developer/workspace/dreamkit/dk-manager/etas_app_deployment/deploy.sh 49 dreamKIT-026b8717",
+    "deploy_ara_testapp_dreamKIT": "/home/developer/workspace/dreamkit/dk-manager/etas_app_deployment/deploy.sh 49 test_kuksa_client dreamKIT-23042261",
+    "deploy_covesa_basic_actuators_dreamKIT": "/home/developer/workspace/dreamkit/dk-manager/etas_app_deployment/deploy.sh 49 covesa_basic_actuators dreamKIT-23042261",
+    "deploy_phone_using_detection_dreamKIT": "/home/developer/workspace/dreamkit/dk-manager/etas_app_deployment/deploy.sh 49 phone_using_detection dreamKIT-23042261"
 }

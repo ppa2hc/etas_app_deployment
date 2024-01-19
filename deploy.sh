@@ -26,10 +26,18 @@ echo "=========================================================="
 cd $defaultAppFolder/$appName
 ./run.sh
 
-echo ""
-echo ""
-echo "=========================================================="
-echo "=================== Deploy Your App ======================"
-echo "=========================================================="
-cd /home/developer/workspace/dreamkit/dk-manager/etas_app_deployment
-node main.js $kit_id $execType $appName $appFullPath $codeName $codeFullPath
+if [ $? -eq 0 ]
+then
+  echo "Successfully build your app. Let's deploy !!!"
+  echo ""
+  echo ""
+  echo "=========================================================="
+  echo "=================== Deploy Your App ======================"
+  echo "=========================================================="
+  cd /home/developer/workspace/dreamkit/dk-manager/etas_app_deployment
+  node main.js $kit_id $execType $appName $appFullPath $codeName $codeFullPath
+else
+  echo "Error: Could not compile. please check building errors !!!"
+fi
+
+
