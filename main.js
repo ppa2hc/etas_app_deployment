@@ -62,9 +62,9 @@ socket.on("connect", () => {
     });
     console.log("register done !!!");
 
-    deployAraAppToKit(g_kit_id.toString(), g_execType.toString(),
-        g_appName.toString(), g_appPath.toString(),
-        g_codeName.toString(), g_codePath.toString());
+    // deployAraAppToKit(g_kit_id.toString(), g_execType.toString(),
+    //     g_appName.toString(), g_appPath.toString(),
+    //     g_codeName.toString(), g_codePath.toString());
 });
 
 /*
@@ -91,6 +91,11 @@ socket.on("list-all-kits-result", (data) => {
             console.log(dataItem.name + " online status is " + dataItem.is_online);
             if (dataItem.is_online) {
                 g_kit_online = true;
+
+
+                deployAraAppToKit(g_kit_id.toString(), g_execType.toString(),
+                g_appName.toString(), g_appPath.toString(),
+                g_codeName.toString(), g_codePath.toString());
             }
             else {
                 g_kit_online = false;
@@ -103,10 +108,10 @@ socket.on("list-all-kits-result", (data) => {
  * Socket IO: on-messageToKit-kitReply: message replied from Server
  */
 const onKitReply = (payload) => {
-    if (!payload) {
-        console.log("onKitReply: null payload");
-        return
-    }
+    // if (!payload) {
+    //     console.log("onKitReply: null payload");
+    //     return
+    // }
     console.log("payload: ");
     console.log(payload);
     if (payload.cmd == "deploy_AraApp_Request") {
@@ -154,51 +159,100 @@ const stringToHash = (s) => {
 /*
  * Send adaptive app to the kit
  */
-function deployAraAppToKit(kit_id, execType, appName, appPath, codeName, codePath) {
-    // fileType: cpp, py, js, etc.,
+// function deployAraAppToKit(kit_id, execType, appName, appPath, codeName, codePath) {
+//     // fileType: cpp, py, js, etc.,
 
+//     let id_ = stringToHash("ara_" + appName);
+//     console.log("id_: " + id_);
+//     console.log("kit_id: " + kit_id);
+
+//     let code_content;
+//     fs.readFile(codePath, (err, buf) => {
+//         if (err) {
+//             console.log("read file failed : " + codePath);
+//             throw err;
+//             process.exit(-1);
+//         }
+//         code_content = buf;
+//     });
+//     // let appContent;
+//     fs.readFile(appPath, (err, buf) => {
+//         if (err) {
+//             console.log("read file failed : " + appPath);
+//             throw err;
+//         }
+//         console.log("file size = " + buf.length);
+//         console.log("file is OK. Let's send !");
+
+//         let p_payload = {
+//             cmd: "deploy_AraApp_Request",
+//             to_kit_id: kit_id,
+//             data: {
+//                 deployFrom: "ETAS",
+//                 id: id_.toString(),
+//                 execType: execType,
+//                 appName: appName,
+//                 appContent: buf.toString('binary'),
+//                 codeName: codeName,
+//                 codeContent: code_content.toString(),
+//                 run_after_deploy: false
+//             }
+//         }
+//         // let g_codeName = args[6];
+//         // let g_codePath = args[7];
+
+//         socket.emit("messageToKit", p_payload);
+//     });
+// }
+
+function deployAraAppToKit(kit_id, execType, appName, appPath, codeName, codePath) {
     let id_ = stringToHash("ara_" + appName);
     console.log("id_: " + id_);
     console.log("kit_id: " + kit_id);
 
-    let code_content;
-    fs.readFile(codePath, (err, buf) => {
+    // First, read the code file
+    fs.readFile(codePath, (err, codeBuf) => {
         if (err) {
             console.log("read file failed : " + codePath);
             throw err;
-            process.exit(-1);
         }
-        code_content = buf;
-    });
-    // let appContent;
-    fs.readFile(appPath, (err, buf) => {
-        if (err) {
-            console.log("read file failed : " + appPath);
-            throw err;
-        }
-        console.log("file size = " + buf.length);
-        console.log("file is OK. Let's send !");
-
-        let p_payload = {
-            cmd: "deploy_AraApp_Request",
-            to_kit_id: kit_id,
-            data: {
-                deployFrom: "ETAS",
-                id: id_.toString(),
-                execType: execType,
-                appName: appName,
-                appContent: buf.toString('binary'),
-                codeName: codeName,
-                codeContent: code_content.toString(),
-                run_after_deploy: false
+        // Now that code file is read, proceed with reading the app file.
+        fs.readFile(appPath, (err, appBuf) => {
+            if (err) {
+                console.log("read file failed : " + appPath);
+                throw err;
             }
-        }
-        // let g_codeName = args[6];
-        // let g_codePath = args[7];
-
-        socket.emit("messageToKit", p_payload);
+            console.log("file size = " + appBuf.length);
+            console.log("file is OK.");
+        
+            let p_payload = {
+                cmd: "deploy_AraApp_Request",
+                to_kit_id: kit_id,
+                data: {
+                    deployFrom: "ETAS",
+                    id: id_.toString(),
+                    execType: execType,
+                    appName: appName,
+                    appContent: appBuf.toString('binary'),
+                    codeName: codeName,
+                    codeContent: codeBuf.toString(), // Now this is defined
+                    run_after_deploy: false
+                }
+            }
+            
+            if (g_kit_online) {
+                console.log("Kit is online. Trying to send !");
+                socket.emit("messageToKit", p_payload);
+            }
+            else {
+                console.log("Kit is NOT online. Hold on.");
+            }
+            
+        });
     });
 }
+
+
 
 /*
  * Send message to the kit
