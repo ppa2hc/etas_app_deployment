@@ -1,0 +1,21 @@
+{
+  "ECU": [
+    {
+      "name" : "tc375",
+      "comType": "CAN",
+      "channel": "0x2",
+      "reqToEcuID": "0x69A",
+      "resFromEcuID": "0x61A",
+      "pathToSblBin": "",
+      "sblStartAddr": "",
+      "pathToAppBin": "./tc375/app.bin",
+      "appStartAddr": "0xA0100000",
+      "pathToCalBin": "./tc375/app.bin",
+      "calStartAddr": "0xA0080000",
+      "pathToReproSeq": "./tc375/libReproSeq.so",
+      "pathToSecCheck": "",
+      "ecuSwVer": "tc375_v1"
+    }
+  ]
+}
+  

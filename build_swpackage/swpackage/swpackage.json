@@ -1,0 +1,10 @@
+{
+  "version": "0.0.0",
+  "patch": "0.0.1",
+  "releasenotes": "<h1>Release Update</h1><p>SW Update for TC375.</p><p>Features include:<br>- New feature of Ambient Light<br>- Support seven patterns<br>- Increase intensity</p>",
+  "xiphostupdate": false,
+  "xipupdate": false,
+  "vipupdate": false,
+  "fotaupdate": true
+}
+  
