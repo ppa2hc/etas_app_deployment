@@ -1,6 +1,7 @@
 import time
 import subprocess
 import shutil
+import sys
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 from watchdog.observers.polling import PollingObserver
@@ -11,6 +12,15 @@ g_current_dir = Path(__file__).resolve().parent
 print(f"main.py_dir: {g_current_dir}")
 
 folder_path = '/media/sf_C_DRIVE/Users/ppa2hc/etas_ota/fota'
+
+g_dreamkit_id = None
+
+if len(sys.argv) < 2:
+    print("Usage: python3 main.py <dreamKIT-ID>")
+    sys.exit(1)
+    
+g_dreamkit_id = sys.argv[1]
+print("dreamKIT ID:", g_dreamkit_id)
 
 class DebouncedEventHandler(FileSystemEventHandler):
     def __init__(self, debounce_interval=0.5):
@@ -60,7 +70,7 @@ class DebouncedEventHandler(FileSystemEventHandler):
         print(f"Created zip archive: {zip_output}")
 
         deploy2kit_script = f"{g_current_dir}/deployToKit.py"
-        cmd = f"python3 {deploy2kit_script} dreamKIT-331b898a"
+        cmd = f"python3 {deploy2kit_script} {g_dreamkit_id}"
         subprocess.run(cmd, shell=True)
 
     def on_created(self, event):
