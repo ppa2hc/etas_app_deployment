@@ -3,19 +3,25 @@
     {
       "name" : "tc375",
       "comType": "CAN",
-      "channel": "0x2",
+      "isFdEnabled": true,
+      "channel": "can0",
       "reqToEcuID": "0x69A",
       "resFromEcuID": "0x61A",
+      "udsDataLength": 8,
+      "udsPaddingValue": "0xCC",
+      "udsBlockSize": 0,
+      "udsStmin": 0,
       "pathToSblBin": "",
       "sblStartAddr": "",
       "pathToAppBin": "./tc375/app.bin",
       "appStartAddr": "0xA0100000",
+      "appSize": "0x100000",
       "pathToCalBin": "./tc375/app.bin",
       "calStartAddr": "0xA0080000",
+      "calSize": "0x10000",
       "pathToReproSeq": "./tc375/libReproSeq.so",
       "pathToSecCheck": "",
       "ecuSwVer": "tc375_v1"
     }
   ]
 }
-  
