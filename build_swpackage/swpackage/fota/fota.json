@@ -1,7 +1,7 @@
 {
   "ECU": [
     {
-      "name" : "tc375",
+      "name" : "tc375_ambient",
       "comType": "CAN",
       "isFdEnabled": true,
       "channel": "can0",
