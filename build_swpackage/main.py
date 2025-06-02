@@ -41,6 +41,28 @@ class DebouncedEventHandler(FileSystemEventHandler):
     def deployPackageToTarget(self, src_path):
         print(f"deployPackageToTarget: {src_path}")
 
+        # Check if file extension is .hex
+        if not src_path.endswith(".hex"):
+            print("Only .hex files are supported. Exiting.")
+            return
+
+        target_fota_json = f"{g_current_dir}/swpackage/fota/fota.json"
+        if "ambient" in src_path:
+            print("Deploying ambient package...")
+            target_fota_json = f"{g_current_dir}/swpackage/fota/fota_ambient.json"
+        elif "motor" in src_path:
+            print("Deploying motor package...")
+            target_fota_json = f"{g_current_dir}/swpackage/fota/fota_motor.json"
+        else:
+            print("src type not supported. Exiting.")
+            return
+        cmd = f"cp {target_fota_json} {g_current_dir}/swpackage/fota/fota.json"
+        result = subprocess.run(cmd, shell=True)
+        if result.returncode == 0:
+            print(f"Script executed successfully. cmd: {cmd}")
+        else:
+            print(f"Script execution failed with return code: {result.returncode}. cmd: {cmd}")
+
         hex2bin_script = f"{g_current_dir}/hex2bin.py"
         bin_path = f"{g_current_dir}/swpackage/fota/tc375/app.bin"
         cmd = f"python3 {hex2bin_script} {src_path} 0x80100000 0x80200000 {bin_path}"

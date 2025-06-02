@@ -4,7 +4,7 @@
       "name" : "tc375_motor",
       "comType": "CAN",
       "isFdEnabled": true,
-      "channel": "can0",
+      "channel": "can1",
       "reqToEcuID": "0x68A",
       "resFromEcuID": "0x62A",
       "udsDataLength": 8,

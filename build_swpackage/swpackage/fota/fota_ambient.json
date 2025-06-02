@@ -4,7 +4,7 @@
       "name" : "tc375_ambient",
       "comType": "CAN",
       "isFdEnabled": true,
-      "channel": "can0",
+      "channel": "can1",
       "reqToEcuID": "0x69A",
       "resFromEcuID": "0x61A",
       "udsDataLength": 8,
